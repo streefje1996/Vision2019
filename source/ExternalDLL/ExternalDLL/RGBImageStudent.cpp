@@ -10,7 +10,7 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) :
 {
 	this->image = new RGB[other.getWidth() * other.getHeight()];
 	for (int i = 0; i < getWidth() * getHeight(); i++) {
-		this->image[i] = other.image[i];
+		this->image[i] = other.getPixel(i);
 	}
 	//TODO: Create a copy from the other object
 }
@@ -36,7 +36,7 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
 	RGBImage::set(other.getWidth(), other.getHeight());
 	this->set(other.getWidth(), other.getHeight());
 	for (int i = 0; i < getWidth() * getHeight(); i++) {
-		this->image[i] = other.image[i];
+		this->image[i] = other.getPixel(i);
 	}
 }
 
