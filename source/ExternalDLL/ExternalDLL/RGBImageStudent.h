@@ -7,6 +7,8 @@
 #pragma once
 #include "RGBImage.h"
 class RGBImageStudent : public RGBImage {
+private:
+	RGB * image;
 public:
 
 	RGBImageStudent();
@@ -22,4 +24,6 @@ public:
 
 	RGB getPixel(int x, int y) const;
 	RGB getPixel(int i) const;
+
+	RGB * getImage() const;
 };
