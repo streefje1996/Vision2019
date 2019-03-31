@@ -6,7 +6,12 @@
 
 #pragma once
 #include "PreProcessing.h"
+#include "ImageFactory.h"
+#include <unordered_map>
+
 class StudentPreProcessing : public PreProcessing {
+private:
+	
 public:
 	IntensityImage * stepToIntensityImage(const RGBImage &image) const;
 	IntensityImage * stepScaleImage(const IntensityImage &image) const;
