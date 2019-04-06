@@ -16,8 +16,8 @@ void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
-	int startingI = 1;
-	for (int i = 1; i <= 5; i++) {
+	int startingI = 6;
+	for (int i = 5; i <= 5; i++) {
 		int baseN = 5 * i;
 		
 
@@ -35,8 +35,9 @@ int main(int argc, char * argv[]) {
 			for (int iteratorCount = startingI; iteratorCount <= 10; iteratorCount++) {
 				ImageFactory::setImplementation(ImageFactory::DEFAULT);
 				// start de timer
-				myBaseTimer->start();
+				
 				myFile << baseN * iteratorCount;
+				double defaultTime = 0.0;
 				for (int i = 0; i < baseN * iteratorCount; i++) {
 					// doe iets wat je wilt meten hoe lang het duurt
 					RGBImage * input = ImageFactory::newRGBImage();
@@ -51,26 +52,28 @@ int main(int argc, char * argv[]) {
 
 					DLLExecution * executor = new DLLExecution(input);
 
-
-					if (executeSteps(executor)) {
-						std::cout << "Face recognition successful!" << std::endl;
-						std::cout << "Facial parameters: " << std::endl;
-						for (int i = 0; i < 16; i++) {
-							std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
-						}
+					myBaseTimer->start();
+					//Set this to true to use student implementation
+					if (!executor->executePreProcessingStep1(false)) {
+						std::cout << "Pre-processing step 1 failed!" << std::endl;
+						return false;
 					}
+					myBaseTimer->stop();
+					defaultTime += myBaseTimer->elapsedSeconds();
+					myBaseTimer->reset();
+
 					delete input;
 					delete executor;
 
 				}
 
 				// stop timer
-				myBaseTimer->stop();
+				
 
 				//Write deafault time to file
 				myFile << ",";
-				myFile << myBaseTimer->elapsedSeconds();
-
+				myFile << defaultTime;
+				defaultTime = 0.0;
 				
 				// Reset clock for student implementation
 				myBaseTimer->reset();
@@ -79,8 +82,8 @@ int main(int argc, char * argv[]) {
 				ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 				// start timer
-				myBaseTimer->start();
-
+				
+				double studentTime = 0.0;
 				for (int i = 0; i < baseN * iteratorCount; i++) {
 
 					// Student implementation
@@ -95,26 +98,27 @@ int main(int argc, char * argv[]) {
 					ImageIO::saveRGBImage(*inputStudent, ImageIO::getDebugFileName("debug.png"));
 
 					DLLExecution * executorStudent = new DLLExecution(inputStudent);
-
-
-					if (executeSteps(executorStudent)) {
-						std::cout << "Face recognition successful!" << std::endl;
-						std::cout << "Facial parameters: " << std::endl;
-						for (int i = 0; i < 16; i++) {
-							std::cout << (i + 1) << ": " << executorStudent->facialParameters[i] << std::endl;
-						}
+					
+					myBaseTimer->start();
+					if (!executorStudent->executePreProcessingStep1(true)) {
+						std::cout << "Pre-processing step 1 failed!" << std::endl;
+						return false;
 					}
+					myBaseTimer->stop();
+					studentTime += myBaseTimer->elapsedSeconds();
+					myBaseTimer->reset();
+
 
 					delete inputStudent;
 					delete executorStudent;
 				}
 				// stop de timer
-				myBaseTimer->stop();
+				
 
 				myFile << ",";
-				myFile << myBaseTimer->elapsedSeconds();
+				myFile << studentTime;
 				myFile << "\n";
-				
+				studentTime = 0.0;
 				// Visual line to know if we started a new cycle when looking at the cmd
 				std::cout << "*********************************************************************************" << std::endl;
 				
@@ -125,7 +129,6 @@ int main(int argc, char * argv[]) {
 		catch (std::exception& e) {
 			myFile.close();
 			// bewaar de gegevens daarna in een bestand
-			myBaseTimer->save("Speedtest.txt");
 
 			std::cout << "Klaar" << std::endl;
 
@@ -160,10 +163,7 @@ int main(int argc, char * argv[]) {
 bool executeSteps(DLLExecution * executor) {
 
 	//Execute the four Pre-processing steps
-	if (!executor->executePreProcessingStep1(false)) {
-		std::cout << "Pre-processing step 1 failed!" << std::endl;
-		return false;
-	}
+
 
 	if (!executor->executePreProcessingStep2(false)) {
 		std::cout << "Pre-processing step 2 failed!" << std::endl;
