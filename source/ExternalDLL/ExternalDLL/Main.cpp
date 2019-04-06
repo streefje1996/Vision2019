@@ -9,44 +9,141 @@
 #include "HereBeDragons.h"
 #include "ImageFactory.h"
 #include "DLLExecution.h"
+#include "basetimer.h"
+#include <fstream>
 
 void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
+	int startingI = 1;
+	for (int i = 1; i <= 5; i++) {
+		int baseN = 5 * i;
+		
 
-	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
-	ImageFactory::setImplementation(ImageFactory::STUDENT);
+		std::ofstream myFile;
+		std::stringstream fileName;
+		fileName << "TestData" << baseN << ".csv";
+		myFile.open(fileName.str());
+		myFile << "Cycles, Default, Student \n";
+		ImageIO::debugFolder = "D:\\Users\\Bas\\HBO-ICT\\Jaar 2\\Blok 3\\Vision\\Debug";
+		ImageIO::isInDebugMode = false; //If set to false the ImageIO class will skip any image save function calls
+
+		// maak een timer object aan
+		BaseTimer* myBaseTimer = new BaseTimer();
+		try {
+			for (int iteratorCount = startingI; iteratorCount <= 10; iteratorCount++) {
+				ImageFactory::setImplementation(ImageFactory::DEFAULT);
+				// start de timer
+				myBaseTimer->start();
+				myFile << baseN * iteratorCount;
+				for (int i = 0; i < baseN * iteratorCount; i++) {
+					// doe iets wat je wilt meten hoe lang het duurt
+					RGBImage * input = ImageFactory::newRGBImage();
+					if (!ImageIO::loadImage("C:\\Users\\Admin\\Documents\\GitHub\\Vision2019\\testsets\\Set A\\TestSet Images\\child-1.png", *input)) {
+						std::cout << "Image could not be loaded!" << std::endl;
+						system("pause");
+						return 0;
+					}
 
 
-	ImageIO::debugFolder = "D:\\Users\\Rolf\\Downloads\\FaceMinMin";
-	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
+					ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+
+					DLLExecution * executor = new DLLExecution(input);
 
 
+					if (executeSteps(executor)) {
+						std::cout << "Face recognition successful!" << std::endl;
+						std::cout << "Facial parameters: " << std::endl;
+						for (int i = 0; i < 16; i++) {
+							std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+						}
+					}
+					delete input;
+					delete executor;
+
+				}
+
+				// stop timer
+				myBaseTimer->stop();
+
+				//Write deafault time to file
+				myFile << ",";
+				myFile << myBaseTimer->elapsedSeconds();
+
+				
+				// Reset clock for student implementation
+				myBaseTimer->reset();
 
 
-	RGBImage * input = ImageFactory::newRGBImage();
-	if (!ImageIO::loadImage("F:\\Projects\\Vision2019\\testsets\\Set A\\TestSet Images\\child-1.png", *input)) {
-		std::cout << "Image could not be loaded!" << std::endl;
-		system("pause");
-		return 0;
-	}
+				ImageFactory::setImplementation(ImageFactory::STUDENT);
+
+				// start timer
+				myBaseTimer->start();
+
+				for (int i = 0; i < baseN * iteratorCount; i++) {
+
+					// Student implementation
+					RGBImage * inputStudent = ImageFactory::newRGBImage();
+					if (!ImageIO::loadImage("C:\\Users\\Admin\\Documents\\GitHub\\Vision2019\\testsets\\Set A\\TestSet Images\\child-1.png", *inputStudent)) {
+						std::cout << "Image could not be loaded!" << std::endl;
+						system("pause");
+						return 0;
+					}
 
 
-	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+					ImageIO::saveRGBImage(*inputStudent, ImageIO::getDebugFileName("debug.png"));
 
-	DLLExecution * executor = new DLLExecution(input);
+					DLLExecution * executorStudent = new DLLExecution(inputStudent);
 
 
-	if (executeSteps(executor)) {
-		std::cout << "Face recognition successful!" << std::endl;
-		std::cout << "Facial parameters: " << std::endl;
-		for (int i = 0; i < 16; i++) {
-			std::cout << (i+1) << ": " << executor->facialParameters[i] << std::endl;
+					if (executeSteps(executorStudent)) {
+						std::cout << "Face recognition successful!" << std::endl;
+						std::cout << "Facial parameters: " << std::endl;
+						for (int i = 0; i < 16; i++) {
+							std::cout << (i + 1) << ": " << executorStudent->facialParameters[i] << std::endl;
+						}
+					}
+
+					delete inputStudent;
+					delete executorStudent;
+				}
+				// stop de timer
+				myBaseTimer->stop();
+
+				myFile << ",";
+				myFile << myBaseTimer->elapsedSeconds();
+				myFile << "\n";
+				
+				// Visual line to know if we started a new cycle when looking at the cmd
+				std::cout << "*********************************************************************************" << std::endl;
+				
+				// sla de gegevens op in het timer object onder een label	
+				
+			}
 		}
-	}
+		catch (std::exception& e) {
+			myFile.close();
+			// bewaar de gegevens daarna in een bestand
+			myBaseTimer->save("Speedtest.txt");
 
-	delete executor;
+			std::cout << "Klaar" << std::endl;
+
+			delete myBaseTimer;
+			myBaseTimer = nullptr;
+			system("pause");
+			return 1;
+		}
+		startingI = 1;
+		myFile.close();
+		delete myBaseTimer;
+		myBaseTimer = nullptr;
+	}
+	
+
+	std::cout << "Klaar" << std::endl;
+
+	
 	system("pause");
 	return 1;
 }
