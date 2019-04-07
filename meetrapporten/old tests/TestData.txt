@@ -1,0 +1,120 @@
+BaseN: 10 Iterator count: 1 Total: 10
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 2.61147 seconds
+Time for the operation was: 2611 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.42804 seconds
+Time for the operation was: 2428 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 2 Total: 20
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.85852 seconds
+Time for the operation was: 4858 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.40749 seconds
+Time for the operation was: 2407 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 3 Total: 30
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.82433 seconds
+Time for the operation was: 4824 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.41579 seconds
+Time for the operation was: 2415 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 4 Total: 40
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.82249 seconds
+Time for the operation was: 4822 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.42973 seconds
+Time for the operation was: 2429 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 5 Total: 50
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.85007 seconds
+Time for the operation was: 4850 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.40207 seconds
+Time for the operation was: 2402 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 6 Total: 60
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.80873 seconds
+Time for the operation was: 4808 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.41024 seconds
+Time for the operation was: 2410 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 7 Total: 70
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.83596 seconds
+Time for the operation was: 4835 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.43242 seconds
+Time for the operation was: 2432 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 8 Total: 80
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.8548 seconds
+Time for the operation was: 4854 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.41595 seconds
+Time for the operation was: 2415 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 9 Total: 90
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.82893 seconds
+Time for the operation was: 4828 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.21382 seconds
+Time for the operation was: 2213 milli seconds
+ ===================================================================================
+
+
+BaseN: 10 Iterator count: 10 Total: 100
+ =================== DEFAULT IMPLEMENTATION ========================================
+Time for the operation was: 4.39742 seconds
+Time for the operation was: 4397 milli seconds
+ ===================================================================================
+
+ =================== STUDENT IMPLEMENTATION ========================================
+Time for the operation was: 2.1715 seconds
+Time for the operation was: 2171 milli seconds
+ ===================================================================================
+
+
